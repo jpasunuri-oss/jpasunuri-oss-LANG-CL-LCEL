@@ -3,8 +3,12 @@ from langchain.schema.output_parser import StrOutputParser
 from langchain.llms import HuggingFaceEndpoint
 
 import os
+from dotenv import load_dotenv
 
 from langchain_community.chat_models import ChatHuggingFace
+
+# Load dot_env 
+load_dotenv()
 
 # TODO: Complete this prompt to ask the model for general information on a {topic}:
 prompt_template = "{topic}"
@@ -12,6 +16,7 @@ prompt = ChatPromptTemplate.from_template(prompt_template)
 
 llm = HuggingFaceEndpoint(
     endpoint_url=os.environ['LLM_ENDPOINT'],
+    huggingfacehub_api_token = os.environ['HF_TOKEN'],
     task="text-generation",
     model_kwargs={
         "max_new_tokens": 1024
@@ -27,8 +32,7 @@ output_parser = StrOutputParser()
 # Make sure you use LCEL to achieve this. 
 # Hint: The function body can be as short as a single line
 def get_basic_chain():
-    chain = None
-    return chain
+    return prompt | chat_model | output_parser
 
 # Using the chain created in basic_chain, invoke the chain with a topic.
 # PLEASE DO NOT edit this function

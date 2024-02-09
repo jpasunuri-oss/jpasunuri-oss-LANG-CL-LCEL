@@ -1,4 +1,4 @@
-from src.main.lab import basic_chain_invoke
+from lab import basic_chain_invoke
 
 def main():
     print(basic_chain_invoke(input("Enter a topic=> ")))
